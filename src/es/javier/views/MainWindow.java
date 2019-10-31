@@ -1,7 +1,9 @@
 package es.javier.views;
 
 import es.javier.models.Animal;
+import es.javier.models.AnimalTreeView;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
@@ -24,15 +26,22 @@ public class MainWindow extends Application {
         List<TreeItem<String>> treeItemsContenedor = new ArrayList();
 
         for (Animal animal : listaAnimales) {
-            Animal objectToTreeView = new ObjectToTreeView(object);
-            treeItemsContainer.add(objectToTreeView.getRootItem());
+            AnimalTreeView animalTreeView = new AnimalTreeView(animal);
+            treeItemsContenedor.add(animalTreeView.getRootItem());
         }
 
-        TreeView<Animal> tree = new TreeView<>();
-        tree.setShowRoot(false);
+        TreeItem<String> rootItem = new TreeItem();
+        rootItem.setExpanded(true);
+        rootItem.getChildren().addAll(treeItemsContenedor);
+        rootItem.setValue("Animales");
 
-        TreeItem<Animal> treeRoot = new TreeItem<>();
-        tree.setRoot(treeRoot);
+        TreeView treeView = new TreeView(rootItem);
+
+        Scene scene = new Scene(treeView, 300, 250);
+
+        stage.setTitle("Hello World!");
+        stage.setScene(scene);
+        stage.show();
 
     }
 
